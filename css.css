@@ -1,0 +1,19 @@
+#photo-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+}
+.show-photo{
+    height: 40%;
+    
+    margin: 1%;
+
+}
+label {
+    display: block;   
+    
+}
+
+label, input{
+    margin: 10px;
+}
