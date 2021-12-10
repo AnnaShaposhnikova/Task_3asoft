@@ -2,7 +2,7 @@ const buttonLoad = document.querySelector("#btn");
 const photoContainer = document.querySelector("#photo-container");
 
 const arrayOfStoragedImgs =  JSON.parse(localStorage.getItem("images") || "[]");// массив объектов
-console.log(arrayOfStoragedImgs)
+// console.log(arrayOfStoragedImgs)
 arrayOfStoragedImgs.forEach(element => {
 
   const divForPhoto = renderPhoto(element.name, element.src);
@@ -14,8 +14,7 @@ buttonLoad.addEventListener("change", onBtnLoadClick);
 photoContainer.addEventListener("click", onBtnDeleteClick);
 
 function onBtnLoadClick(e) {
-  // console.log(buttonLoad.value);
-
+  
   const selectedImg = e.target.files[0];
   const nameOfFile = selectedImg.name;
 
@@ -25,23 +24,23 @@ function onBtnLoadClick(e) {
     const divForPhoto = renderPhoto(nameOfFile, e.target.result);
     photoContainer.append(divForPhoto);
 
-      try {
-        let images = JSON.parse(localStorage.getItem("images") || "[]");
+              const images = JSON.parse(localStorage.getItem("images") || "[]");
          const img ={
+           dataId: Math.random(),
            name: nameOfFile,
            src: e.target.result
          }
 
         images.push(img);
 
-        localStorage.setItem("images", JSON.stringify(images));        
+        localStorage.setItem("images", JSON.stringify(images)); 
 
-      } catch (e) {
-        console.log("Storage failed: " + e);
-      }
+      divForPhoto.setAttribute("data-id", img.dataId);
+      // console.log(divForPhoto)
+
   };
   reader.readAsDataURL(selectedImg);
-  // buttonLoad.value = "";
+  
 }
 
 function renderPhoto(stringFileName, src) {
@@ -52,6 +51,7 @@ function renderPhoto(stringFileName, src) {
 
   img.classList.add("show-photo");
   img.src = src;
+ 
   fileName.classList.add("photo-name");
   buttonDelete.classList.add("delete");
 
@@ -62,16 +62,28 @@ function renderPhoto(stringFileName, src) {
   div.append(buttonDelete);
   return div;
 }
-function saveImgInLocalstorage(){
-
-}
-
-
-   
-
 
 function onBtnDeleteClick(e) {
   if (!e.target.classList.contains("delete")) {
     return;
   }
+  // console.log(e.target);
+  const button = e.target;
+  console.log(e.target.parentNode);
+
+  // const dataId = e.target.parentNode.dataset.id;
+  // const dataId = button.parentNode.getAttribute("data-id")
+//   const arrayOfStoragedImgs =  JSON.parse(localStorage.getItem("images"));
+// // console.log(arrayOfStoragedImgs)
+//   arrayOfStoragedImgs.forEach(element => {
+
+  
+  // })
+  
+  // console.log(dataId);
+  e.target.parentNode.remove();
+
+
+  //удалить из localstorage
+
 }
