@@ -1,17 +1,64 @@
-#photo-container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+#photo-container {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+  text-align: center;
+}
+button{
+    margin-top: 10px;
 }
 
-.show-photo{
-    height: 150px;    
-    margin: 10px;
+.show-photo {
+  height: 200px;
+
+  margin: 10px;
+}
+.div-one-photo {
+  overflow: hidden;
+}
+
+div {
+  position: relative;
 }
 
 label {
-    display: block;     
+  display: block;
 }
 
-label, input{
-    margin: 10px;
+label,
+input {
+  margin: 10px;
+}
+
+.cross-out::before {
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-bottom: 3px solid black;
+  width: 100%;
+}
+
+.cross-out::before {
+  animation-name: cross;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+}
+@keyframes cross {
+  0% {
+    width: 0;
+    left: 0;
+    right: auto;
+  }
+  100% {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}
+.hidden{
+    display: none;
 }

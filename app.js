@@ -1,4 +1,4 @@
-//Тестовое завдание:
+//Тестовое задание:
 //Есть кнопка.  При помощи нее загрузить выбранные фото с компьютера и отобразить их с названием фото
 // Фото должны оставаться при перезагрузке страницы. При повторному виборе фото, они дожны добавдяться к существующим.
 //Иметь функционал для удаления отдельной фотографии. Сделать анимацию, сначала фото зачеркивается, потом удаляется.
@@ -8,7 +8,7 @@ const buttonLoad = document.querySelector("#btn");
 const photoContainer = document.querySelector("#photo-container");
 
 const arrayOfStoragedImgs = JSON.parse(localStorage.getItem("images") || "[]"); // массив объектов
-// console.log(arrayOfStoragedImgs)
+
 arrayOfStoragedImgs.forEach((element) => {
   const divForPhoto = renderPhoto(element.name, element.src);
   divForPhoto.setAttribute("data-id", element.dataId);
@@ -29,7 +29,7 @@ function onBtnLoadClick(e) {
 
     const retrievedImages = JSON.parse(localStorage.getItem("images") || "[]");
     const img = {
-      dataId: Math.random(),
+      dataId: Date.now(),
       name: nameOfFile,
       src: e.target.result,
     };
@@ -49,8 +49,10 @@ function renderPhoto(stringFileName, src) {
   const img = document.createElement("img");
   const fileName = document.createElement("div");
   const buttonDelete = document.createElement("button");
+  div.classList.add("div-one-photo");
 
   img.classList.add("show-photo");
+
   img.src = src;
 
   fileName.classList.add("photo-name");
@@ -68,23 +70,24 @@ function onBtnDeleteClick(e) {
   if (!e.target.classList.contains("delete")) {
     return;
   }
-
   const button = e.target;
-  console.log(e.target.parentNode);
+  button.classList.add("hidden");
 
-  const dataId = e.target.parentNode.dataset.id;
-  // const dataId = button.parentNode.getAttribute("data-id")
+  const div = button.parentNode
+  div.classList.add("cross-out");
 
-  console.log(dataId);
+  setTimeout(() => {
+    const button = e.target;
 
-  const retrievedImages = JSON.parse(localStorage.getItem("images"));
-  console.log(retrievedImages);
+    const dataId = e.target.parentNode.dataset.id;
 
-  retrievedImages.filter(element => {element.dataId !== +dataId});
-      
-  // console.log(retrievedImages);
-  localStorage.setItem("images", JSON.stringify(retrievedImages));
-  // e.target.parentNode.remove();
+    const retrievedImages = JSON.parse(localStorage.getItem("images"));
 
-  //удалить из localstorage
+    const newImgs = retrievedImages.filter(
+      (element) => element.dataId !== +dataId
+    );
+
+    localStorage.setItem("images", JSON.stringify(newImgs));
+    e.target.parentNode.remove();
+  }, 2000);
 }
